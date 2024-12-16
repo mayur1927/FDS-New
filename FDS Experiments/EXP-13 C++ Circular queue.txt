@@ -1,0 +1,99 @@
+#include <iostream>
+#define SIZE 5
+using namespace std;
+
+class Pizza {
+    int front, rear, q[SIZE];
+
+public:
+    Pizza() {
+        front = -1;
+        rear = -1;
+    }
+
+    int isfull() {
+        return (front == 0 && rear == SIZE - 1) || (front == rear + 1);
+    }
+
+    int isempty() {
+        return front == -1 && rear == -1;
+    }
+
+    void add() {
+        if (!isfull()) {
+            cout << "\nEnter the Pizza ID: ";
+            if (front == -1 && rear == -1) {
+                front = 0;
+                rear = 0;
+                cin >> q[rear];
+            } else {
+                rear = (rear + 1) % SIZE;
+                cin >> q[rear];
+            }
+        } else {
+            cout << "\nOrders are full!";
+        }
+    }
+
+    void serve() {
+        if (!isempty()) {
+            cout << "\nOrder served is: " << q[front];
+            if (front == rear) {
+                front = -1;
+                rear = -1;
+            } else {
+                front = (front + 1) % SIZE;
+            }
+        } else {
+            cout << "\nOrders are empty!";
+        }
+    }
+
+    void display() {
+        if (!isempty()) {
+            cout << "\nCurrent orders: ";
+            for (int i = front; i != rear; i = (i + 1) % SIZE) {
+                cout << q[i] << " <- ";
+            }
+            cout << q[rear];
+        } else {
+            cout << "\nOrders are empty!";
+        }
+    }
+
+    void check() {
+        int choice;
+        do {
+            cout << "\n\n * * * * PIZZA PARLOUR * * * * \n\n";
+            cout << "1. Add a Pizza \n";
+            cout << "2. Display the Orders \n";
+            cout << "3. Serve a Pizza \n";
+            cout << "4. Exit \n";
+            cout << "Enter your choice: ";
+            cin >> choice;
+
+            switch (choice) {
+                case 1:
+                    add();
+                    break;
+                case 2:
+                    display();
+                    break;
+                case 3:
+                    serve();
+                    break;
+                case 4:
+                    cout << "\nExiting... Thank you for visiting!\n";
+                    return;
+                default:
+                    cout << "Invalid choice! Please try again.";
+            }
+        } while (true);
+    }
+};
+
+int main() {
+    Pizza p1;
+    p1.check();
+    return 0;
+}

@@ -1,0 +1,81 @@
+#include <iostream>
+#include <cstring>
+#define SIZE 50
+using namespace std;
+
+class StackExp {
+    int top;
+    char stk[SIZE];
+
+public:
+    StackExp() {
+        top = -1;
+    }
+    void push(char);
+    char pop();
+    bool isFull();
+    bool isEmpty();
+};
+
+void StackExp::push(char x) {
+    if (isFull()) {
+        cout << "\nStack Overflow!";
+        return;
+    }
+    stk[++top] = x;
+}
+
+char StackExp::pop() {
+    if (isEmpty()) {
+        cout << "\nStack Underflow!";
+        return '\0'; // Return null character if stack is empty
+    }
+    return stk[top--];
+}
+
+bool StackExp::isFull() {
+    return (top == SIZE - 1);
+}
+
+bool StackExp::isEmpty() {
+    return (top == -1);
+}
+
+bool isMatchingPair(char open, char close) {
+    return (open == '(' && close == ')') ||
+           (open == '[' && close == ']') ||
+           (open == '{' && close == '}');
+}
+
+int main() {
+    StackExp s1;
+    char exp[SIZE];
+    cout << "\n\t!! Parenthesis Checker..!!!!" << endl;
+    cout << "\nEnter the expression to check whether it is well-formed or not: ";
+    cin.getline(exp, SIZE);
+
+    for (int i = 0; exp[i] != '\0'; i++) {
+        char ch = exp[i];
+
+        // Push opening brackets onto the stack
+        if (ch == '(' || ch == '[' || ch == '{') {
+            s1.push(ch);
+        }
+        // Handle closing brackets
+        else if (ch == ')' || ch == ']' || ch == '}') {
+            if (s1.isEmpty() || !isMatchingPair(s1.pop(), ch)) {
+                cout << "\nInvalid Expression... Not well-parenthesized.\n";
+                return 0;
+            }
+        }
+    }
+
+    // If stack is empty, all brackets matched correctly
+    if (s1.isEmpty()) {
+        cout << "\nExpression is well-parenthesized...\n";
+    } else {
+        cout << "\nInvalid Expression... Not well-parenthesized.\n";
+    }
+
+    return 0;
+}

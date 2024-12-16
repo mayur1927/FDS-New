@@ -1,0 +1,73 @@
+# Write a Python program to store marks scored in subject "FDS" by N students in the class.
+Write funmctions to compute following:
+	a) The average score of class
+	b) Highest score and lowest score of class
+	c) Count of students who were abset for the test
+	d) Display mark with highest frequency
+
+
+def average(listofmarks):
+    total = 0
+    count = 0
+    for mark in listofmarks:
+        if mark != -1:
+            total += mark
+            count += 1
+    if count == 0:
+        print("No students present to calculate average")
+        return
+    avg = total / count
+    print("Total Marks:", total)
+    print("Average Marks:", avg)
+
+def Maximum(listofmarks):
+    Max = None
+    for mark in listofmarks:
+        if mark != -1:
+            if Max is None or mark > Max:
+                Max = mark
+    return Max if Max is not None else "No valid marks"
+
+def Minimum(listofmarks):
+    Min = None
+    for mark in listofmarks:
+        if mark != -1:
+            if Min is None or mark < Min:
+                Min = mark
+    return Min if Min is not None else "No valid marks"
+
+def absentcount(listofmarks):
+    return listofmarks.count(-1)
+
+def maxFrequency(listofmarks):
+    freq_dict = {}
+    for mark in listofmarks:
+        if mark in freq_dict:
+            freq_dict[mark] += 1
+        else:
+            freq_dict[mark] = 1
+
+    Max_freq = 0
+    Max_freq_mark = None
+    for mark, freq in freq_dict.items():
+        if freq > Max_freq and mark != -1:
+            Max_freq = freq
+            Max_freq_mark = mark
+
+    print("Marks    |  Frequency")
+    for mark, freq in freq_dict.items():
+        print(f"{mark}    |  {freq}")
+    
+    return Max_freq_mark, Max_freq
+
+marksinFDS = []
+numberofstudents = int(input("Enter total number of students: "))
+for _ in range(numberofstudents):
+    marks = int(input("Enter marks of student: "))
+    marksinFDS.append(marks)
+
+average(marksinFDS)
+print("\nMaximum =", Maximum(marksinFDS))
+print("\nMinimum =", Minimum(marksinFDS))
+print("\nNumber of students absent =", absentcount(marksinFDS))
+print("\nMarks with maximum frequency =", maxFrequency(marksinFDS))

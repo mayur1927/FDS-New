@@ -1,0 +1,100 @@
+#Write a Python program to compute following computation on matrix:
+a) Addition of two matrices
+b) Subtraction of two matrices
+c) Multiplication of two matrices
+d) Transpose of a matrix
+
+
+def Add():
+    for i in range(m):
+        for j in range(n):
+            C[i][j] = A[i][j] + B[i][j]
+    display(C)
+
+def Sub():
+    for i in range(m):
+        for j in range(n):
+            C[i][j] = A[i][j] - B[i][j]
+    display(C)
+
+def Mul():
+    for i in range(m):
+        for j in range(q):
+            C[i][j] = 0  # Initialize element to 0 for correct summation
+            for k in range(n):
+                C[i][j] += A[i][k] * B[k][j]
+    display(C)
+
+def Transpose(matrix, rows, cols):
+    T = [[0 for j in range(rows)] for i in range(cols)]
+    for i in range(rows):
+        for j in range(cols):
+            T[j][i] = matrix[i][j]
+    display(T)
+
+def display(matrix):
+    print('Resultant Matrix is:')
+    for row in matrix:
+        print(' '.join(map(str, row)))
+    print()
+
+m = int(input('Enter no. of rows for Matrix 1:'))
+n = int(input('Enter no. of columns for Matrix 1:'))
+
+A = [[0 for j in range(n)] for i in range(m)]
+print('Enter Elements of Matrix A')
+for i in range(m):
+    for j in range(n):
+       A[i][j] = int(input(f'Enter element A[{i}][{j}]:'))
+
+p = int(input('Enter no. of rows for Matrix 2:'))
+q = int(input('Enter no. of columns for Matrix 2:'))
+
+B = [[0 for j in range(q)] for i in range(p)]
+print('Enter Elements of Matrix B')
+for i in range(p):
+    for j in range(q):
+        B[i][j] = int(input(f'Enter element B[{i}][{j}]:'))
+
+flag = 1
+while flag == 1:
+    print('\n1. Add Matrices\n2. Subtract Matrices\n3. Multiply Matrices\n4. Transpose of Matrices\n5. Exit')
+    choice = int(input('Enter Choice:'))
+
+    if choice == 1:
+        if m == p and n == q:
+            print('Matrices can be added')
+            C = [[0 for j in range(n)] for i in range(m)]
+            Add()
+        else:
+            print('Matrices cannot be added')
+    elif choice == 2:
+        if m == p and n == q:
+            print('Matrices can be subtracted')
+            C = [[0 for j in range(n)] for i in range(m)]
+            Sub()
+        else:
+            print('Matrices cannot be subtracted')
+    elif choice == 3:
+        if n == p:
+            print('Matrices can be multiplied')
+            C = [[0 for j in range(q)] for i in range(m)]
+            Mul()
+        else:
+            print('Matrices cannot be multiplied')
+    elif choice == 4:
+        print('Transpose of Matrix A:')
+        Transpose(A, m, n)
+        print('Transpose of Matrix B:')
+        Transpose(B, p, q)
+    elif choice == 5:
+        flag = 0
+        print("Thanks for using this program!")
+    else:
+        print('Please enter a valid choice')
+
+    if choice != 5:
+        a = input("\nDo you want to continue (y/n): ")
+        if a.lower() != 'y':
+            flag = 0
+            print("Thanks for using this program!")

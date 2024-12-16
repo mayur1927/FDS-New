@@ -1,0 +1,84 @@
+#include <iostream>
+#include <cstring>
+#define MAX 50
+using namespace std;
+
+class STACK {
+private:
+    char a[MAX];
+    int top;
+
+public:
+    STACK() {
+        top = -1;
+    }
+    void push(char);
+    void reverse();
+    void convert(char[]);
+    void palindrome();
+};
+
+void STACK::push(char c) {
+    if (top >= MAX - 1) {
+        cout << "\nStack Overflow!";
+        return;
+    }
+    top++;
+    a[top] = c;
+    cout << endl << c << " is pushed on stack ...";
+}
+
+void STACK::reverse() {
+    cout << "\n\nReverse string is: ";
+    for (int i = top; i >= 0; i--) {
+        cout << a[i];
+    }
+    cout << endl;
+}
+
+void STACK::convert(char str[]) {
+    int k = 0;
+    int len = strlen(str);
+    for (int j = 0; j < len; j++) {
+        if (isalpha(str[j])) { // Check if the character is alphabetic
+            if (isupper(str[j])) {
+                str[k] = tolower(str[j]);
+            } else {
+                str[k] = str[j];
+            }
+            k++;
+        }
+    }
+    str[k] = '\0';
+    cout << endl << "Converted String: " << str << "\n";
+}
+
+void STACK::palindrome() {
+    char str[MAX];
+    int i, j;
+    for (i = top, j = 0; i >= 0; i--, j++) {
+        str[j] = a[i];
+    }
+    str[j] = '\0';
+    if (strcmp(str, a) == 0) {
+        cout << "\n\nString is palindrome...";
+    } else {
+        cout << "\n\nString is not palindrome...";
+    }
+}
+
+int main() {
+    STACK stack;
+    char str[MAX];
+    cout << "\nEnter a string to reverse and check if it is a palindrome:\n\n";
+    cin.getline(str, MAX);
+    stack.convert(str);
+    for (int i = 0; str[i] != '\0'; i++) {
+        stack.push(str[i]);
+    }
+    stack.palindrome();
+    stack.reverse();
+    cout << "\nPress Enter to exit...";
+    cin.get(); // To pause the console
+    return 0;
+}
